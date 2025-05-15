@@ -118,12 +118,23 @@ async def start_with_referer(message, bot, state, text):
 
 
 # Function to start without referral link
+#async def start_without_referer(message, bot, state):
+ #   me = await bot.get_me()
+  #  await bot.send_photo(chat_id=message.from_user.id, photo=welcome,
+   #                      caption=f"🔗 Here is your personal link:\n\n"
+    #                             f"🔗 <code>https://t.me/{me.username}?start={message.from_user.id}</code>\n\n"
+     #                            f"Publish it and receive anonymous messages")
+# Function to start without referral link (без картинки)
+
 async def start_without_referer(message, bot, state):
     me = await bot.get_me()
-    await bot.send_photo(chat_id=message.from_user.id, photo=welcome,
-                         caption=f"🔗 Here is your personal link:\n\n"
-                                 f"🔗 <code>https://t.me/{me.username}?start={message.from_user.id}</code>\n\n"
-                                 f"Publish it and receive anonymous messages")
+    await bot.send_message(
+        chat_id=message.from_user.id,
+        text=f"🔗 Here is your personal link:\n\n"
+             f"🔗 <code>https://t.me/{me.username}?start={message.from_user.id}</code>\n\n"
+             f"Publish it and receive anonymous messages",
+        parse_mode='html'
+    )
 
 
 # Function to check if the URL is a bot link
