@@ -9,14 +9,18 @@ from src.models.channels import Channels
 from src.models.referrals import Referrals
 from src.models.user import User
 
-client = motor.motor_asyncio.AsyncIOMotorClient(
-    f'mongodb://{os.getenv("MONGO_USERNAME")}:{os.getenv("MONGO_PASSWORD")}@{os.getenv("MONGO_HOST")}:{os.getenv("MONGO_PORT")}')
+from dotenv import load_dotenv
+
+load_dotenv()
+
+print("MONGO_URI:", os.getenv("MONGO_URI"))
+print("MONGO_DB_NAME:", os.getenv("MONGO_DB_NAME"))
+# Используем MONGO_URI напрямую
+client = motor.motor_asyncio.AsyncIOMotorClient(os.getenv("MONGO_URI"))
 raw_db = client[os.getenv("MONGO_DB_NAME")]
 
-external_client = motor.motor_asyncio.AsyncIOMotorClient(
-    f'mongodb://{os.getenv("MONGO_USERNAME")}:{os.getenv("MONGO_PASSWORD")}@{os.getenv("MONGO_HOST_EXTERNAL")}:{os.getenv("MONGO_PORT_EXTERNAL")}')
+external_client = motor.motor_asyncio.AsyncIOMotorClient(os.getenv("MONGO_URI"))
 external_db = external_client[os.getenv("MONGO_DB_NAME")]
-
 
 class Collection:
 
@@ -95,14 +99,6 @@ class Collection:
         data[0]['_id'] = str(data[0]['_id'])
         model = self.model(**data[0])
         return model
-
-
-class MongoDbClient(BaseModel):
-    users: Any
-    channels: Any
-    referrals: Any
-    adv: Any
-
 
 
 class MongoDbClient(BaseModel):

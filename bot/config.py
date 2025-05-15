@@ -1,7 +1,5 @@
 from dotenv import load_dotenv
-
-load_dotenv()
-
+import os
 
 def load_env():
-    return True
+    load_dotenv()  # Загружает переменные из .env
